@@ -1,0 +1,88 @@
+<%- include('assets/navbar') %>
+    <%- include('assets/header') %>
+
+    <div class="row" style="justify-content: center">
+        <div class="col-sm-6 mt-5">
+            <h2 class="alert alert-info text-center">Add Category</h2>
+            <a href="/category/list" class="btn btn-primary">List Catgrory </a>&nbsp; &nbsp;
+            <form method="POST" enctype="multipart/form-data" id="productform">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input   id="name" name="name" type="text" class="form-control" autocomplete="off" />
+                </div>
+       
+                <div class="mb-3">
+                    <label for="desc" class="form-label">Description </label>
+                    <textarea 
+                        class="form-control"
+                        id="desc"
+                        name="desc" 
+                        type="text" 
+                        class="form-control" 
+                        autocomplete="off" 
+                        rows="3"></textarea>
+                </div>
+               
+                <div class="form-group col-6">
+                    <label for="productFile">Image</label><span class="important"></span>
+                    <input  type="file" class="form-control" id="image" name="image" />
+                </div>
+
+                <div class="form-group col-6">
+                  <label for="categoryCheck">Category</label><span class="important">*</span>
+                  <select class="form-control" name="category" id="categoryCheck">
+                    <option value= "0" >Select Category</option>
+                    <% if(typeof categorylist != 'undefined') { %> 
+                      <% categorylist.forEach(function(data) { %>
+                      <option value=<%= data._id %>><%= data.name %> </option>
+                        <% })} %>
+                  </select>
+                </div>
+                
+
+                    <br />
+                <button type="submit" class="btn btn-outline-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+     $("#productform").validate({
+       rules: {
+        name: {
+              required: true,
+              minlength: 2,
+              maxlength: 250,
+            },
+            desc: {
+              required: true,
+              minlength: 2,
+              maxlength: 500,
+            },
+           image: {
+           required: true,
+           extension: "jpg|jpeg|png|gif"
+         },
+       },
+       message: {
+        name: {
+              minlength: "Product Name must contain atleast 2 characters",
+              maxlength: "Product Name must not contain more than 250 characters",
+            },
+        desc: {
+              minlength: "Product Description must contain atleast 2 characters",
+              maxlength: "Product Description must not contain more than 500 characters",
+            },
+         image: {
+           required: "Please upload file.",
+           extension: "Please upload file in these format only (jpg, jpeg, png, gif)."
+         },
+       },
+     });
+     });
+     
+     </script>
+
+
+     <%- include('assets/footer'); %>
